@@ -24,16 +24,13 @@ class Articles {
   }
 
   Future<void> getArticles() async {
-    print(totalResults);
     if (totalResults != null) {
-      print('1 if');
       if ((totalResults / pageSize).ceil() <= page) {
         print((totalResults / pageSize).ceil().toString());
         print(((page - 1) * pageSize).toString());
         return;
       }
     }
-    print('passou');
 
     String url =
         "https://newsapi.org/v2/top-headlines?country=br&pageSize=$pageSize&page=$page&category=&apiKey=5a184881ccc849828d579f683ffce622";
