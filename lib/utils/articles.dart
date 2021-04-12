@@ -17,7 +17,6 @@ class Articles {
       articles = [];
       json['articles'].forEach((v) {
         if (v['urlToImage'] != null && v['description'] != null) {
-          print(v['title']);
           articles.add(new ArticleModel.fromJson(v));
         }
       });
@@ -25,14 +24,6 @@ class Articles {
   }
 
   Future<void> getArticles() async {
-    // if (totalResults != null) {
-    //   if ((totalResults / pageSize).ceil() <= page) {
-    //     print((totalResults / pageSize).ceil().toString());
-    //     print(((page - 1) * pageSize).toString());
-    //     return;
-    //   }
-    // }
-
     String url =
         "https://newsapi.org/v2/top-headlines?country=br&pageSize=$pageSize&page=$page&category=&apiKey=5a184881ccc849828d579f683ffce622";
 
@@ -44,7 +35,6 @@ class Articles {
         Articles tmp = Articles.fromJson(response.data);
         this.status = tmp.status;
         this.totalResults = tmp.totalResults;
-        print(tmp.articles.length);
         this.articles.addAll(tmp.articles);
         page++;
       }
