@@ -26,10 +26,13 @@ class _HomeState extends State<Home> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
-        setState(() {
-          _loadingFooter = true;
-        });
-        fetchArticles();
+        if (articles.articles.length < articles.totalResults &&
+            !_loadingFooter) {
+          setState(() {
+            _loadingFooter = true;
+          });
+          fetchArticles();
+        }
       }
     });
 
