@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/models/category_model.dart';
 
@@ -14,8 +15,8 @@ class CategoryTile extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Image.network(
-              category.imageUrl,
+            child: CachedNetworkImage(
+              imageUrl: category.imageUrl,
               height: 70,
               width: 120,
               fit: BoxFit.cover,
