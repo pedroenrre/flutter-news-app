@@ -5,8 +5,6 @@ import 'package:news_app/models/category_model.dart';
 import 'package:news_app/utils/articles.dart';
 import 'package:news_app/utils/category_data.dart';
 
-// 5a184881ccc849828d579f683ffce622
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
