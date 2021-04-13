@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/pages/Login.dart';
 import 'package:news_app/pages/home.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.grey[50],
       ),
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: Login(),
     );
   }
 }
