@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/pages/SignUp.dart';
+
+import 'package:news_app/pages/home.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -6,10 +10,41 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerPassword = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    print(_auth.currentUser);
+  }
 
   FocusNode _emailFocusNode = FocusNode();
+
+  void signIn() async {
+    setState(() {
+      isLoading = true;
+    });
+    final email = _controllerEmail.text;
+    final pass = _controllerPassword.text;
+
+    _auth
+        .signInWithEmailAndPassword(email: email, password: pass)
+        .then((user) async {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +111,7 @@ class _LoginState extends State<Login> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +135,11 @@ class _LoginState extends State<Login> {
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(color: Colors.blue)),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(color: Colors.red)),
                       ),
+                      validator: validateEmail,
                     ),
                     SizedBox(
                       height: 20,
@@ -117,7 +157,11 @@ class _LoginState extends State<Login> {
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
-                              borderSide: BorderSide(color: Colors.blue))),
+                              borderSide: BorderSide(color: Colors.blue)),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(color: Colors.red))),
+                      validator: validatePass,
                     ),
                     SizedBox(
                       height: 20,
@@ -126,7 +170,33 @@ class _LoginState extends State<Login> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: () {}, child: Text('Login')),
+                          onPressed: () {
+                            if (isLoading) return;
+                            if (_formKey.currentState.validate()) {
+                              signIn();
+                            }
+                          },
+                          child: isLoading
+                              ? CircularProgressIndicator(
+                                  backgroundColor: Colors.grey[50],
+                                )
+                              : Text('Login')),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: TextButton(
+                        child: Text(
+                          'NOVA CONTA',
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SignUp()),
+                          );
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -137,4 +207,21 @@ class _LoginState extends State<Login> {
       ],
     );
   }
+}
+
+String validateEmail(String value) {
+  Pattern pattern =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  RegExp regex = new RegExp(pattern);
+  if (!regex.hasMatch(value))
+    return 'Digite um email válido';
+  else
+    return null;
+}
+
+String validatePass(String value) {
+  if (value == null || value.isEmpty)
+    return 'Digite sua senha';
+  else
+    return null;
 }
