@@ -145,6 +145,7 @@ class _HomeState extends State<Home> {
               TextButton(
                 onPressed: () async {
                   _auth.signOut().then((value) {
+                    Navigator.of(context).pop(false);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => Login()),
