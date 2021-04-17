@@ -106,18 +106,22 @@ class _HomeState extends State<Home> {
                       Expanded(
                         child: Container(
                           color: Colors.grey[200],
-                          child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: articles.articles.length,
-                              // shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return ArticleTile(
-                                    imageUrl:
-                                        articles.articles[index].urlToImage,
-                                    title: articles.articles[index].title,
-                                    description:
-                                        articles.articles[index].description);
-                              }),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                bottom: _loadingFooter ? 0 : 20),
+                            child: ListView.builder(
+                                controller: _scrollController,
+                                itemCount: articles.articles.length,
+                                // shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return ArticleTile(
+                                      imageUrl:
+                                          articles.articles[index].urlToImage,
+                                      title: articles.articles[index].title,
+                                      description:
+                                          articles.articles[index].description);
+                                }),
+                          ),
                         ),
                       ),
                       Container(
