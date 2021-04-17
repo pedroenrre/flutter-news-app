@@ -1,11 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/components/article_list.dart';
 import 'package:news_app/components/article_tile.dart';
 import 'package:news_app/components/category_tile.dart';
 import 'package:news_app/models/category_model.dart';
+import 'package:news_app/pages/Login.dart';
 import 'package:news_app/utils/articles.dart';
 import 'package:news_app/utils/category_data.dart';
-
-// 5a184881ccc849828d579f683ffce622
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,6 +18,7 @@ class _HomeState extends State<Home> {
   List<CategoryModel> categories = [];
   Articles articles = new Articles();
   ScrollController _scrollController;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   bool _loading = true;
   bool _loadingFooter = false;
@@ -64,19 +67,22 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [],
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Mob"),
-              Text(
-                "News",
-                style: TextStyle(color: Colors.blue),
-              ),
+              Text("MobNews"),
             ],
           ),
           elevation: 0,
           centerTitle: true,
         ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              _exitApp(context);
+            },
+            child: const Icon(Icons.logout),
+            backgroundColor: Colors.red),
         body: SafeArea(
           child: _loading
               ? Center(
@@ -99,39 +105,59 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          color: Colors.grey[200],
-                          child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: articles.articles.length,
-                              // shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return ArticleTile(
-                                    imageUrl:
-                                        articles.articles[index].urlToImage,
-                                    title: articles.articles[index].title,
-                                    description:
-                                        articles.articles[index].description);
-                              }),
+                          child: ArticleList(
+                              articles: articles,
+                              loadingFooter: _loadingFooter,
+                              scrollController: _scrollController)),
+                      Container(
+                        color: Colors.grey[200],
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: _loadingFooter
+                                ? SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator())
+                                : null,
+                          ),
                         ),
-                      ),
-                      _loadingFooter
-                          ? Container(
-                              color: Colors.grey[200],
-                              child: Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator()),
-                                ),
-                              ),
-                            )
-                          : SizedBox(height: 0),
+                      )
                     ],
                   ),
                 ),
         ));
+  }
+
+  Future<bool> _exitApp(BuildContext context) {
+    return showDialog(
+          builder: (context) => AlertDialog(
+            title: Text('Do you want to exit this application?'),
+            content: Text('We hate to see you leave...'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  print("you choose no");
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  _auth.signOut().then((value) {
+                    Navigator.of(context).pop(false);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                    );
+                  }).onError((error, stackTrace) => null);
+                },
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+          context: context,
+        ) ??
+        false;
   }
 }

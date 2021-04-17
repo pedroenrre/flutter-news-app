@@ -30,6 +30,11 @@ dependencies:
   dio: ^4.0.0
   cached_network_image: ^3.0.0
   webview_flutter: ^2.0.4
+  firebase_core: "1.0.3"
+  firebase_auth: "1.1.0"
+  # cloud_firestore: ^1.0.5
+  scoped_model: ^1.1.0
+  shared_preferences: ^2.0.5
 
 dev_dependencies:
   flutter_test:

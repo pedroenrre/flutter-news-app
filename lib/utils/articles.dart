@@ -23,9 +23,9 @@ class Articles {
     }
   }
 
-  Future<void> getArticles() async {
+  Future<void> getArticles({String cat = ""}) async {
     String url =
-        "https://newsapi.org/v2/top-headlines?country=br&pageSize=$pageSize&page=$page&category=&apiKey=5a184881ccc849828d579f683ffce622";
+        "https://newsapi.org/v2/top-headlines?country=br&pageSize=$pageSize&page=$page&category=$cat&apiKey=5a184881ccc849828d579f683ffce622";
 
     try {
       Dio dio = new Dio();
