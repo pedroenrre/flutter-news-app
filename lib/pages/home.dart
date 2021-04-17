@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
               _exitApp(context);
             },
             child: const Icon(Icons.logout),
-            backgroundColor: Colors.red),
+            backgroundColor: Colors.blue),
         body: SafeArea(
           child: _loading
               ? Center(
