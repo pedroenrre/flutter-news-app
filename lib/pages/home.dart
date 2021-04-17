@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/components/article_list.dart';
 import 'package:news_app/components/article_tile.dart';
 import 'package:news_app/components/category_tile.dart';
 import 'package:news_app/models/category_model.dart';
@@ -104,26 +105,10 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          color: Colors.grey[200],
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                bottom: _loadingFooter ? 0 : 20),
-                            child: ListView.builder(
-                                controller: _scrollController,
-                                itemCount: articles.articles.length,
-                                // shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return ArticleTile(
-                                      imageUrl:
-                                          articles.articles[index].urlToImage,
-                                      title: articles.articles[index].title,
-                                      description:
-                                          articles.articles[index].description);
-                                }),
-                          ),
-                        ),
-                      ),
+                          child: ArticleList(
+                              articles: articles,
+                              loadingFooter: _loadingFooter,
+                              scrollController: _scrollController)),
                       Container(
                         color: Colors.grey[200],
                         child: Center(
