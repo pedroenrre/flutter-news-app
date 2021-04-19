@@ -13,26 +13,34 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User _user;
 
   @override
   void initState() {
     super.initState();
-    displaySplash();
+    initializeUser();
+    navigateUser();
   }
 
-  displaySplash() async {
+  Future initializeUser() async {
+    await Firebase.initializeApp();
+    final User firebaseUser = FirebaseAuth.instance.currentUser;
+    await firebaseUser.reload();
+    _user = _auth.currentUser;
+    // get User authentication status here
+  }
+
+  navigateUser() async {
     Timer(Duration(seconds: 2), () async {
       if (_auth.currentUser != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Home()),
-        );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => Home()),
+            (Route<dynamic> route) => false);
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Login()),
-        );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => Login()),
+            (Route<dynamic> route) => false);
       }
     });
   }
