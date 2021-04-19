@@ -6,7 +6,7 @@ List<CategoryModel> getCategories() {
 
   // Categoria 1
   category = new CategoryModel();
-  category.setName = 'Bussiness';
+  category.setName = 'Business';
   category.setImage =
       'https://images.unsplash.com/photo-1491336477066-31156b5e4f35?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80';
   categories.add(category);
@@ -20,7 +20,7 @@ List<CategoryModel> getCategories() {
 
   // Categoria 1
   category = new CategoryModel();
-  category.setName = 'Bussiness';
+  category.setName = 'Business';
   category.setImage =
       'https://images.unsplash.com/photo-1491336477066-31156b5e4f35?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80';
   categories.add(category);
@@ -34,7 +34,7 @@ List<CategoryModel> getCategories() {
 
   // Categoria 1
   category = new CategoryModel();
-  category.setName = 'Bussiness';
+  category.setName = 'Business';
   category.setImage =
       'https://images.unsplash.com/photo-1491336477066-31156b5e4f35?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80';
   categories.add(category);
@@ -48,7 +48,7 @@ List<CategoryModel> getCategories() {
 
   // Categoria 1
   category = new CategoryModel();
-  category.setName = 'Bussiness';
+  category.setName = 'Business';
   category.setImage =
       'https://images.unsplash.com/photo-1491336477066-31156b5e4f35?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80';
   categories.add(category);

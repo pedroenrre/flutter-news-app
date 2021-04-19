@@ -24,12 +24,16 @@ class Articles {
   }
 
   Future<void> getArticles({String cat = ""}) async {
+    if (cat != "") {
+      cat = cat.toLowerCase();
+    }
     String url =
         "https://newsapi.org/v2/top-headlines?country=br&pageSize=$pageSize&page=$page&category=$cat&apiKey=5a184881ccc849828d579f683ffce622";
 
     try {
       Dio dio = new Dio();
       final response = await dio.get(url);
+      print(response.data);
 
       if (response.data['status'] == 'ok') {
         Articles tmp = Articles.fromJson(response.data);

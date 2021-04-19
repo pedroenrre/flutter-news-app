@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/components/article_list.dart';
-import 'package:news_app/components/article_tile.dart';
 import 'package:news_app/components/category_tile.dart';
 import 'package:news_app/models/category_model.dart';
 import 'package:news_app/pages/Login.dart';
+import 'package:news_app/pages/category_article.dart';
 import 'package:news_app/utils/articles.dart';
 import 'package:news_app/utils/category_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -100,7 +99,18 @@ class _HomeState extends State<Home> {
                           // shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return CategoryTile(category: categories[index]);
+                            return CategoryTile(
+                              category: categories[index],
+                              onTap: (value) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryArticle(
+                                            category: value,
+                                          )),
+                                );
+                              },
+                            );
                           },
                         ),
                       ),
