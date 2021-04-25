@@ -178,8 +178,7 @@ class _LoginState extends State<Login> {
                           },
                           child: isLoading
                               ? CircularProgressIndicator(
-                                  backgroundColor: Colors.grey[50],
-                                )
+                                  backgroundColor: Colors.grey[50])
                               : Text('Login')),
                     ),
                     Padding(

@@ -142,15 +142,15 @@ class _HomeState extends State<Home> {
   Future<bool> _exitApp(BuildContext context) {
     return showDialog(
           builder: (context) => AlertDialog(
-            title: Text('Do you want to exit this application?'),
-            content: Text('We hate to see you leave...'),
+            title: Text('Você deseja sair do aplicativo?'),
+            content: Text('Aperte sim para sair e não para continuar no app'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   print("you choose no");
                   Navigator.of(context).pop(false);
                 },
-                child: Text('No'),
+                child: Text('Não'),
               ),
               TextButton(
                 onPressed: () async {
@@ -162,7 +162,7 @@ class _HomeState extends State<Home> {
                     );
                   }).onError((error, stackTrace) => null);
                 },
-                child: Text('Yes'),
+                child: Text('Sim'),
               ),
             ],
           ),
