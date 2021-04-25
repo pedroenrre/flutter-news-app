@@ -1,13 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/pages/article_webview.dart';
 
 class ArticleTile extends StatelessWidget {
-  final String imageUrl, title, description;
+  final String imageUrl, title, description, url;
 
   ArticleTile(
       {@required this.imageUrl,
       @required this.title,
-      @required this.description});
+      @required this.description,
+      @required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,14 @@ class ArticleTile extends StatelessWidget {
           child: Material(
             color: Colors.white.withOpacity(0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ArticleWebView(
+                              articleUrl: url,
+                            )));
+              },
               splashColor: Colors.blue[100],
               child: Padding(
                 padding: const EdgeInsets.all(10),

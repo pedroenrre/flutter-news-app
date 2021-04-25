@@ -30,7 +30,8 @@ class ArticleList extends StatelessWidget {
               return ArticleTile(
                   imageUrl: articles.articles[index].urlToImage,
                   title: articles.articles[index].title,
-                  description: articles.articles[index].description);
+                  description: articles.articles[index].description,
+                  url: articles.articles[index].url);
             }),
       ),
     );
