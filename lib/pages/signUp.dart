@@ -30,10 +30,8 @@ class _SignUpState extends State<SignUp> {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: pass);
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => Home()), (_) => false);
     } on FirebaseAuthException catch (e) {
       print(e);
       _showDialog(e.message);
