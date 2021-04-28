@@ -16,6 +16,7 @@ class _SignUpState extends State<SignUp> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   bool isLoading = false;
+  bool obscurePass = true;
 
   FocusNode _emailFocusNode = FocusNode();
 
@@ -26,17 +27,39 @@ class _SignUpState extends State<SignUp> {
     final email = _controllerEmail.text;
     final pass = _controllerPassword.text;
 
-    _auth
-        .createUserWithEmailAndPassword(email: email, password: pass)
-        .then((user) async {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Home()), (_) => false);
-    }).catchError((e) {
+    try {
+      await _auth.createUserWithEmailAndPassword(email: email, password: pass);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } on FirebaseAuthException catch (e) {
       print(e);
+      _showDialog(e.message);
       setState(() {
         isLoading = false;
       });
-    });
+    }
+  }
+
+  void _showDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Atenção!'),
+            content: Text(message),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              )
+            ],
+          );
+        });
   }
 
   @override
@@ -137,11 +160,24 @@ class _SignUpState extends State<SignUp> {
                     ),
                     TextFormField(
                       controller: this._controllerPassword,
+                      obscureText: obscurePass,
                       autocorrect: false,
                       validator: validatePass,
                       decoration: InputDecoration(
                           prefixIcon:
                               Icon(Icons.lock_outline, color: Colors.black87),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                                obscurePass
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.black87),
+                            onPressed: () {
+                              setState(() {
+                                obscurePass = !obscurePass;
+                              });
+                            },
+                          ),
                           labelText: 'Senha',
                           labelStyle: TextStyle(color: Colors.black87),
                           enabledBorder: OutlineInputBorder(

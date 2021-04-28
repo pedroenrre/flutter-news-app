@@ -15,6 +15,7 @@ class _LoginState extends State<Login> {
   TextEditingController _controllerPassword = TextEditingController();
   FirebaseAuth _auth = FirebaseAuth.instance;
   bool isLoading = false;
+  bool obscurePass = true;
 
   @override
   void initState() {
@@ -31,19 +32,39 @@ class _LoginState extends State<Login> {
     final email = _controllerEmail.text;
     final pass = _controllerPassword.text;
 
-    _auth
-        .signInWithEmailAndPassword(email: email, password: pass)
-        .then((user) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: pass);
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),
       );
-    }).catchError((e) {
+    } on FirebaseAuthException catch (e) {
       print(e);
+      _showDialog(e.message);
       setState(() {
         isLoading = false;
       });
-    });
+    }
+  }
+
+  void _showDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Atenção!'),
+            content: Text(message),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              )
+            ],
+          );
+        });
   }
 
   @override
@@ -146,10 +167,23 @@ class _LoginState extends State<Login> {
                     ),
                     TextFormField(
                       controller: this._controllerPassword,
+                      obscureText: obscurePass,
                       autocorrect: false,
                       decoration: InputDecoration(
                           prefixIcon:
                               Icon(Icons.lock_outline, color: Colors.black87),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                                obscurePass
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.black87),
+                            onPressed: () {
+                              setState(() {
+                                obscurePass = !obscurePass;
+                              });
+                            },
+                          ),
                           labelText: 'Senha',
                           labelStyle: TextStyle(color: Colors.black87),
                           enabledBorder: OutlineInputBorder(

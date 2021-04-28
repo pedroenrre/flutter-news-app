@@ -121,9 +121,9 @@ class _HomeState extends State<Home> {
                               scrollController: _scrollController)),
                       Container(
                         color: Colors.grey[200],
-                        child: Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
                             child: _loadingFooter
                                 ? SizedBox(
                                     height: 20,
@@ -145,14 +145,13 @@ class _HomeState extends State<Home> {
             title: Text('Você deseja sair do aplicativo?'),
             content: Text('Aperte sim para sair e não para continuar no app'),
             actions: <Widget>[
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
-                  print("you choose no");
                   Navigator.of(context).pop(false);
                 },
                 child: Text('Não'),
               ),
-              TextButton(
+              ElevatedButton(
                 onPressed: () async {
                   _auth.signOut().then((value) {
                     Navigator.of(context).pop(false);
