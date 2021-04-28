@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/components/article_tile.dart';
-import 'package:news_app/components/category_tile.dart';
-import 'package:news_app/models/category_model.dart';
 import 'package:news_app/utils/articles.dart';
 
 class ArticleList extends StatelessWidget {
@@ -21,7 +19,7 @@ class ArticleList extends StatelessWidget {
     return Container(
       color: Colors.grey[200],
       child: Padding(
-        padding: EdgeInsets.only(bottom: loadingFooter ? 0 : 20),
+        padding: EdgeInsets.only(bottom: loadingFooter ? 0 : 0),
         child: ListView.builder(
             controller: scrollController,
             itemCount: articles.articles.length,

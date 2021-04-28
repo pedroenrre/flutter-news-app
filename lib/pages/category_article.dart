@@ -81,15 +81,16 @@ class _CategoryArticleState extends State<CategoryArticle> {
                               scrollController: _scrollController)),
                       Container(
                         color: Colors.grey[200],
-                        child: Center(
-                          child: _loadingFooter
-                              ? SizedBox(
-                                  height: 30,
-                                  width: 20,
-                                  child: CircularProgressIndicator())
-                              : SizedBox(
-                                  height: 0,
-                                ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: _loadingFooter
+                                ? SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator())
+                                : null,
+                          ),
                         ),
                       )
                     ],
