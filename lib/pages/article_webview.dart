@@ -35,10 +35,17 @@ class _ArticleWebViewState extends State<ArticleWebView> {
       body: Column(
         children: [
           Container(
-              height: 60,
+              height: 54,
               padding: EdgeInsets.all(10.0),
-              color: Colors.grey[200],
+              // color: Colors.grey[200],
               alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                border: Border.all(
+                  color: Colors.black54,
+                  width: 2,
+                ),
+              ),
               child: Text(
                 url,
                 maxLines: 1,

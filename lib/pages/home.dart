@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/components/article_list.dart';
 import 'package:news_app/components/category_tile.dart';
 import 'package:news_app/models/category_model.dart';
-import 'package:news_app/pages/Login.dart';
+import 'package:news_app/pages/login.dart';
 import 'package:news_app/pages/category_article.dart';
 import 'package:news_app/utils/articles.dart';
 import 'package:news_app/utils/category_data.dart';

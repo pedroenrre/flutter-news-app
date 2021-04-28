@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/pages/SignUp.dart';
+import 'package:news_app/pages/signUp.dart';
 
 import 'package:news_app/pages/home.dart';
 
