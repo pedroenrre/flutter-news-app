@@ -4,7 +4,7 @@ import 'package:news_app/models/category_model.dart';
 
 class CategoryTile extends StatelessWidget {
   final CategoryModel category;
-  final void Function(String) onTap;
+  final void Function(CategoryModel) onTap;
 
   CategoryTile({@required this.category, this.onTap});
 
@@ -25,7 +25,7 @@ class CategoryTile extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              onTap(category.name);
+              onTap(category);
             },
             child: Container(
               alignment: Alignment.center,

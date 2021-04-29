@@ -5,7 +5,7 @@ import 'package:news_app/models/category_model.dart';
 import 'package:news_app/utils/articles.dart';
 
 class CategoryArticle extends StatefulWidget {
-  final String category;
+  final CategoryModel category;
   CategoryArticle({@required this.category});
   @override
   _CategoryArticleState createState() => _CategoryArticleState();
@@ -50,7 +50,7 @@ class _CategoryArticleState extends State<CategoryArticle> {
   }
 
   fetchArticles() async {
-    await articles.getArticles(cat: widget.category);
+    await articles.getArticles(cat: widget.category.cat);
     setState(() {
       _loading = false;
       _loadingFooter = false;
@@ -62,7 +62,7 @@ class _CategoryArticleState extends State<CategoryArticle> {
     return Scaffold(
         appBar: AppBar(
           actions: [],
-          title: Text(widget.category),
+          title: Text(widget.category.name),
           elevation: 0,
           centerTitle: true,
         ),
