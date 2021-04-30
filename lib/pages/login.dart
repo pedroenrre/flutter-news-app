@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
         builder: (context) {
           return AlertDialog(
             title: Text('Atenção!'),
-            content: Text(message),
+            content: Text('O usuário não existe ou a senha não é a informada'),
             actions: <Widget>[
               ElevatedButton(
                 onPressed: () {
